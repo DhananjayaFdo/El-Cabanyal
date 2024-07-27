@@ -1,0 +1,10 @@
+export 'widgets/product_bottom_sheet/product_bottom_sheet.dart';
+export 'widgets/product_bottom_sheet/back_btn.dart';
+export 'widgets/product_bottom_sheet/image_shower.dart';
+export 'widgets/product_bottom_sheet/details_shower.dart';
+export 'widgets/product_bottom_sheet/toppins_section.dart';
+export 'widgets/product_bottom_sheet/subs_shower.dart';
+export 'widgets/product_bottom_sheet/sizes_shower.dart';
+export 'widgets/product_bottom_sheet/comments_section.dart';
+export 'widgets/product_bottom_sheet/btn_section.dart';
+export 'widgets/product_bottom_sheet/cus_tab_bar.dart';

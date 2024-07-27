@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomStyles {
   static OutlineInputBorder outlineInputBorder1() {
     return OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.transparent),
+      borderSide: const BorderSide(color: Colors.black12),
       borderRadius: BorderRadius.circular(15),
     );
   }

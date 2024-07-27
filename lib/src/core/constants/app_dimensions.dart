@@ -47,6 +47,6 @@ double getScreenWidth(context, double widthvalue) {
 }
 
 class CusDimensions {
-  static const double defaultPaddingSize = 20;
+  static const double defaultPaddingSize = 15;
   static const EdgeInsetsGeometry defaultPadding = EdgeInsets.only(left: defaultPaddingSize, right: defaultPaddingSize);
 }

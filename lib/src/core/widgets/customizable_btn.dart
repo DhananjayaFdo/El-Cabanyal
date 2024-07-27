@@ -14,6 +14,7 @@ class CustomizableBtn extends StatefulWidget {
   final bool isLoading;
   final Color loadingIndicatorColor;
   final TextStyle? style;
+  final BoxBorder? border;
 
   const CustomizableBtn({
     super.key,
@@ -24,10 +25,11 @@ class CustomizableBtn extends StatefulWidget {
     this.height,
     this.padding,
     this.contentPadding,
-    this.backgroundColor = AppTheme.white,
+    this.backgroundColor = AppTheme.WHITE,
     this.borderRadius,
-    this.loadingIndicatorColor = AppTheme.white,
+    this.loadingIndicatorColor = AppTheme.WHITE,
     this.style,
+    this.border,
   });
 
   @override
@@ -44,22 +46,23 @@ class _CustomizableBtnState extends State<CustomizableBtn> {
         child: Container(
           padding: widget.contentPadding ?? const EdgeInsets.all(0),
           height: widget.height ?? 40,
-          width: widget.width ?? double.maxFinite,
+          width: widget.width,
           decoration: BoxDecoration(
             color: widget.backgroundColor,
             borderRadius: widget.borderRadius,
+            border: widget.border,
           ),
           child: Center(
             child: !widget.isLoading
                 ? Text(
-              widget.text,
-              style: widget.style ?? Theme.of(context).textTheme.bodySmall!.copyWith(),
-            )
+                    widget.text,
+                    style: widget.style ?? Theme.of(context).textTheme.bodySmall!.copyWith(),
+                  )
                 : SizedBox(
-              height: (widget.height! - 25.0),
-              width: (widget.height! - 25.0),
-              child: CircularProgressIndicator(color: widget.loadingIndicatorColor),
-            ),
+                    height: (widget.height! - 25.0),
+                    width: (widget.height! - 25.0),
+                    child: CircularProgressIndicator(color: widget.loadingIndicatorColor),
+                  ),
           ),
         ),
       ),

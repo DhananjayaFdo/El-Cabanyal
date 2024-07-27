@@ -68,7 +68,7 @@ class _ChangePassTextFieldState extends State<ChangePassTextField> {
       obscureText: widget.obscureText,
       controller: widget.textEditingController,
       keyboardType: widget.textInputType,
-      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppTheme.white),
+      style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppTheme.WHITE),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(bottom: 20, top: 10),
 
@@ -112,7 +112,7 @@ class _ChangePassTextFieldState extends State<ChangePassTextField> {
           },
 
           //text obscure
-          icon: widget.obscureText ? const Icon(Icons.visibility_off, size: 20, color: AppTheme.white) : const Icon(Icons.visibility, size: 20, color: AppTheme.white),
+          icon: widget.obscureText ? const Icon(Icons.visibility_off, size: 20, color: AppTheme.WHITE) : const Icon(Icons.visibility, size: 20, color: AppTheme.WHITE),
         )
             : null,
       ),

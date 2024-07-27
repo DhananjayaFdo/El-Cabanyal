@@ -4,14 +4,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../config/theme/app_theme.dart';
 
 flutterToast(String msg) => Fluttertoast.showToast(
-  msg: msg,
-  toastLength: Toast.LENGTH_SHORT,
-  gravity: ToastGravity.BOTTOM,
-  timeInSecForIosWeb: 1,
-  backgroundColor: Colors.black,
-  textColor: Colors.white,
-  fontSize: 13.0,
-);
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 13.0,
+    );
 
 class CusScrollBehavior extends ScrollBehavior {
   @override
@@ -28,7 +28,7 @@ String setStringText(dynamic text) {
 class LoadingIndicator extends StatelessWidget {
   final Color color;
 
-  const LoadingIndicator({super.key, this.color = AppTheme.white});
+  const LoadingIndicator({super.key, this.color = AppTheme.WHITE});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class LoadingIndicator extends StatelessWidget {
 class CenterLoading extends StatelessWidget {
   final Color color;
 
-  const CenterLoading({super.key, this.color = AppTheme.white});
+  const CenterLoading({super.key, this.color = AppTheme.PRIMARY});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class CenterMsg extends StatelessWidget {
   final String msg;
   final Color textColor;
 
-  const CenterMsg({super.key, required this.msg, this.textColor = AppTheme.white});
+  const CenterMsg({super.key, required this.msg, this.textColor = AppTheme.BLACK});
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +61,8 @@ class CenterMsg extends StatelessWidget {
       child: Text(
         msg,
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-          color: textColor,
-        ),
+              color: textColor,
+            ),
       ),
     );
   }
