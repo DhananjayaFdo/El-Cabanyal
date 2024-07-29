@@ -194,7 +194,7 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
                   // SizesShower(),
 
                   //? ----------------
-                  // const CommentsSection(),
+                  const CommentsSection(),
                   BtnSection(
                     productQuantityController: productQuantityController,
                     increaseMain: increaseMain,
