@@ -31,6 +31,8 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
   late PageController pageController;
   List<ModifierEntity> mode = [];
   List<List<ItemEntity>> toppings = [];
+  List<List<ItemEntity>> subToppings = [];
+  Map<String, dynamic> subs = {};
 
   void getAllModifiers() {
     productQuantityController.text = '1';
@@ -80,6 +82,28 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
       toppingsInitialController.add(initialControllers);
       toppings.add(data);
     }
+
+    int currentIndex = 0;
+
+    while (currentIndex < toppings.length) {
+      for (int x = 0; x < toppings.length; x++) {
+        for (int j = 0; j < toppings[x].length; j++) {
+          if (toppings[x][j].modifierGroupRules == null) {
+            continue;
+          } else {
+            if (toppings[x][j].modifierGroupRules!.ids == null) {
+              subs.addAll({"": []});
+            } else {
+              subs.addAll({"$x$j": toppings[x][j].modifierGroupRules!.ids!});
+            }
+          }
+        }
+      }
+
+      currentIndex++;
+    }
+
+    print(subs);
   }
 
   void increaseMain() {
@@ -210,7 +234,7 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
                   ),
                   // const SubsShower(),
                   const DivideCon(),
-                  SizesShower(),
+                  const SizesShower(),
 
                   //? ----------------
                   const CommentsSection(),
