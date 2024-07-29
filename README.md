@@ -70,9 +70,8 @@ No testing functions available currently in this project
 
 ## State Management
 
-I used bloc and provider to manage state in this project
+I used provider to manage state in this project
 
-- [Bloc](https://pub.dev/packages/flutter_bloc)
 - [Provider](https://pub.dev/packages/provider)
 
 ### Provider
