@@ -1,11 +1,21 @@
 import 'package:el_cabanyal/src/core/constants/app_dimensions.dart';
+import 'package:el_cabanyal/src/features/other/domain/entity/entities.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../config/theme/app_theme.dart';
 import '../../../../../../core/widgets/widgets.dart';
 
 class BtnSection extends StatefulWidget {
-  const BtnSection({super.key});
+  final TextEditingController productQuantityController;
+  final void Function() increaseMain;
+  final void Function() decreaseMain;
+
+  const BtnSection({
+    super.key,
+    required this.productQuantityController,
+    required this.increaseMain,
+    required this.decreaseMain,
+  });
 
   @override
   State<BtnSection> createState() => _BtnSectionState();
@@ -21,7 +31,11 @@ class _BtnSectionState extends State<BtnSection> {
       ),
       child: Row(
         children: [
-          ItemAddRemove(),
+          ItemAddRemove(
+            productQuantityController: widget.productQuantityController,
+            increaseMain: widget.increaseMain,
+            decreaseMain: widget.decreaseMain,
+          ),
           AddToCartBtn(),
         ],
       ),
@@ -30,7 +44,16 @@ class _BtnSectionState extends State<BtnSection> {
 }
 
 class ItemAddRemove extends StatefulWidget {
-  const ItemAddRemove({super.key});
+  final TextEditingController productQuantityController;
+  final void Function() increaseMain;
+  final void Function() decreaseMain;
+
+  const ItemAddRemove({
+    super.key,
+    required this.productQuantityController,
+    required this.increaseMain,
+    required this.decreaseMain,
+  });
 
   @override
   State<ItemAddRemove> createState() => _ItemAddRemoveState();
@@ -39,6 +62,7 @@ class ItemAddRemove extends StatefulWidget {
 class _ItemAddRemoveState extends State<ItemAddRemove> {
   @override
   Widget build(BuildContext context) {
+    int productQuty = widget.productQuantityController.text.isEmpty ? 0 : int.parse(widget.productQuantityController.text);
     return Container(
       height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -50,7 +74,12 @@ class _ItemAddRemoveState extends State<ItemAddRemove> {
         children: [
           CustomizableBtn(
             text: '-',
-            onTap: () {},
+            onTap: () => setState(() {
+              if (productQuty > 1) {
+                widget.productQuantityController.text = "${productQuty - 1}";
+                widget.decreaseMain();
+              }
+            }),
             style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(3),
             height: 25,
@@ -63,7 +92,7 @@ class _ItemAddRemoveState extends State<ItemAddRemove> {
             width: 40,
             child: Center(
               child: Text(
-                '1',
+                productQuty.toString(),
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(),
               ),
             ),
@@ -71,7 +100,12 @@ class _ItemAddRemoveState extends State<ItemAddRemove> {
 
           CustomizableBtn(
             text: '+',
-            onTap: () {},
+            onTap: () => setState(() {
+              if (productQuty < 10) {
+                widget.productQuantityController.text = "${productQuty + 1}";
+                widget.increaseMain();
+              }
+            }),
             style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.circular(3),
             height: 25,

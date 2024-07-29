@@ -22,13 +22,21 @@ class ProductBottomSheet extends StatefulWidget {
 }
 
 class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBindingObserver {
+  List<TextEditingController> toppingsController = [];
+  List<TextEditingController> toppingsInitialController = [];
+  final productQuantityController = TextEditingController();
+
   final scrollController = ScrollController();
   late PageController pageController;
-  List mode = [];
+  List<ModifierEntity> mode = [];
+  List<List<ItemEntity>> toppings = [];
+
+  List<List<ItemEntity>> subToppings = [];
 
   @override
   void initState() {
     super.initState();
+    getAllModifiers();
     pageController = PageController(initialPage: 0);
     WidgetsBinding.instance.addObserver(this);
   }
@@ -38,6 +46,12 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
     WidgetsBinding.instance.removeObserver(this);
     scrollController.dispose();
     pageController.dispose();
+
+    //? ---------
+    productQuantityController.dispose();
+    for (var element in toppingsController) {
+      element.dispose();
+    }
     super.dispose();
   }
 
@@ -58,12 +72,89 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
     }
   }
 
+  List<ModifierEntity> modifiers = [];
+
+  void getAllModifiers() {
+    productQuantityController.text = '1';
+
+    DataProvider pro = Provider.of<DataProvider>(context, listen: false);
+
+    bool isEnd = false;
+    bool isFirst = true;
+
+    while (isEnd == true) {
+      if (isFirst) {}
+    }
+
+    List<String>? ids = widget.item.modifierGroupRules!.ids;
+    if (ids == null || ids.isEmpty || ids.first.isEmpty) return;
+
+    for (int x = 0; x < ids.length; x++) {
+      ModifierEntity item = pro.modifiers!.where((mode) => mode.modifierGroupId == ids[x]).toList().first;
+      mode.add(item);
+    }
+
+    List<ItemEntity> data = [];
+
+    for (int x = 0; x < mode.length; x++) {
+      ModifierEntity modifierEntity = mode[x];
+
+      for (int j = 0; j < modifierEntity.modifierOptions!.length; j++) {
+        ItemEntity? item = pro.item?.singleWhere((ele) => ele.menuId == mode[x].modifierOptions![j].id);
+        if (item != null) {
+          data.add(item);
+          toppingsController.add(TextEditingController());
+          toppingsInitialController.add(TextEditingController());
+          toppingsController[j].text = '0';
+          toppingsInitialController[j].text = '0';
+        }
+      }
+      toppings.add(data);
+    }
+
+    // for (var id in list) {
+    //   ModifierEntity item = pro.modifiers!.where((item) => item.modifierGroupId == id).toList().first;
+    //   List<ItemEntity> item2 = pro.item!.where((ele) => ele.menuId == item.modifierGroupId).toList();
+    //
+    //   print(item2);
+    // }
+  }
+
+  void increaseMain() {
+    setState(() {
+      for (int x = 0; x < toppingsController.length; x++) {
+        if (toppingsController[x].text != '0') {
+          int initial = int.parse(toppingsInitialController[x].text);
+          int current = int.parse(toppingsController[x].text);
+
+          print(initial);
+          print(current);
+
+          toppingsController[x].text = (current + initial).toString();
+        }
+      }
+    });
+  }
+
+  void decreaseMain() {
+    setState(() {
+      for (int x = 0; x < toppingsController.length; x++) {
+        if (toppingsController[x].text != '0') {
+          int initial = int.parse(toppingsInitialController[x].text);
+          int current = int.parse(toppingsController[x].text);
+
+          toppingsController[x].text = (current - initial).toString();
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DataProvider>(builder: (context, data, child) {
-      for (var element in widget.item.modifierGroupRules!.ids!) {
-        mode.addAll(data.modifiers!.where((ele) => ele.modifierGroupId == element).toList());
-      }
+      // for (var element in widget.item.modifierGroupRules!.ids!) {
+      //   mode.addAll(data.modifiers!.where((ele) => ele.modifierGroupId == element).toList());
+      // }
 
       return Container(
         height: heightUsingMQ(context, 0.9),
@@ -89,25 +180,23 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
                   CustomTabBar(item: widget.item, pageController: pageController),
 
                   //? ----------------
-                  (() {
-                    if (widget.item.modifierGroupRules!.ids!.first.isEmpty) {
-                      return const SizedBox();
-                    } else {
-                      return const Column(
-                        children: [
-                          DivideCon(),
-                          ToppingsSection(),
-                          SubsShower(),
-                          DivideCon(),
-                          SizesShower(),
-                        ],
-                      );
-                    }
-                  }()),
+                  DivideCon(),
+                  ToppingsSection(
+                    toppings: toppings,
+                    toppingsControllers: toppingsController,
+                    toppingsInitialController: toppingsInitialController,
+                  ),
+                  // SubsShower(),
+                  DivideCon(),
+                  // SizesShower(),
 
                   //? ----------------
-                  const CommentsSection(),
-                  const BtnSection(),
+                  // const CommentsSection(),
+                  BtnSection(
+                    productQuantityController: productQuantityController,
+                    increaseMain: increaseMain,
+                    decreaseMain: decreaseMain,
+                  ),
                 ],
               ),
             ),

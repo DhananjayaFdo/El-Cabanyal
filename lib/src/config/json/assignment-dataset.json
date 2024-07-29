@@ -57133,10 +57133,6 @@
           },
           "SuspensionOverride": null
         },
-        "ModifierGroupRules": {
-          "IDs": null,
-          "Overrides": null
-        },
         "RewardGroupRules": {
           "Reward": {
             "Type": "",
