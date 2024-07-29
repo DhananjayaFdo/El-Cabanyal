@@ -1,6 +1,7 @@
 import 'package:el_cabanyal/src/config/theme/app_theme.dart';
 import 'package:el_cabanyal/src/core/constants/constants.dart';
 import 'package:el_cabanyal/src/core/services/provider/data_provider.dart';
+import 'package:el_cabanyal/src/core/services/provider/shop_provider.dart';
 import 'package:el_cabanyal/src/features/other/domain/entity/entities.dart';
 import 'package:el_cabanyal/src/features/other/domain/entity/modifiers/modifiers.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,10 +113,21 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
   }
 
   int calculateTotal() {
+    ShopProvider shop = Provider.of<ShopProvider>(context, listen: false);
+
     if (widget.item.priceInfo == null) return 0;
     if (widget.item.priceInfo!.price == null) return 0;
 
-    return widget.item.priceInfo!.price!.deliveryPrice ?? 0;
+    switch (shop.orderType) {
+      case ShopRepo.table:
+        return widget.item.priceInfo!.price!.tablePrice ?? 0;
+      case ShopRepo.delivery:
+        return widget.item.priceInfo!.price!.deliveryPrice ?? 0;
+      case ShopRepo.pickup:
+        return widget.item.priceInfo!.price!.pickupPrice ?? 0;
+      default:
+        return widget.item.priceInfo!.price!.deliveryPrice ?? 0;
+    }
   }
 
   @override
