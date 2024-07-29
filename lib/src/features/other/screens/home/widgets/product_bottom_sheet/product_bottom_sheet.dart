@@ -111,6 +111,13 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
     });
   }
 
+  int calculateTotal() {
+    if (widget.item.priceInfo == null) return 0;
+    if (widget.item.priceInfo!.price == null) return 0;
+
+    return widget.item.priceInfo!.price!.deliveryPrice ?? 0;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -183,14 +190,14 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
                   CustomTabBar(item: widget.item, pageController: pageController),
 
                   //? ----------------
-                  DivideCon(),
+                  const DivideCon(),
                   ToppingsSection(
                     toppings: toppings,
                     toppingsControllers: toppingsController,
                     toppingsInitialController: toppingsInitialController,
                   ),
                   // SubsShower(),
-                  DivideCon(),
+                  const DivideCon(),
                   // SizesShower(),
 
                   //? ----------------
@@ -199,6 +206,7 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
                     productQuantityController: productQuantityController,
                     increaseMain: increaseMain,
                     decreaseMain: decreaseMain,
+                    calculateTotal: calculateTotal,
                   ),
                 ],
               ),

@@ -1,9 +1,11 @@
 import 'package:el_cabanyal/src/config/theme/app_theme.dart';
 import 'package:el_cabanyal/src/core/assets_repo/svg_repo.dart';
 import 'package:el_cabanyal/src/core/constants/app_dimensions.dart';
+import 'package:el_cabanyal/src/core/services/provider/shop_provider.dart';
 import 'package:el_cabanyal/src/core/widgets/customizable_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import 'menu_bottom_sheet/menu_bottom_sheet_widgets.dart';
 
@@ -35,29 +37,31 @@ class MenuBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+    return Consumer<ShopProvider>(
+      builder: (context, shop, child) => InkWell(
+        onTap: () => showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+          ),
+          builder: (context) => const MenuBottomSheet(),
         ),
-        builder: (context) => const MenuBottomSheet(),
-      ),
-      child: Container(
-        height: 40,
-        width: 170,
-        decoration: BoxDecoration(
-          color: AppTheme.ASH,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('LUNCH MENU'),
-            spacerHor(5),
-            Icon(Icons.keyboard_arrow_down),
-          ],
+        child: Container(
+          height: 40,
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          decoration: BoxDecoration(
+            color: AppTheme.ASH,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('${shop.dayTime == ShopRepo.lunchTime ? 'LUNCH' : 'BREAKFAST'} MENU'),
+              spacerHor(5),
+              Icon(Icons.keyboard_arrow_down),
+            ],
+          ),
         ),
       ),
     );

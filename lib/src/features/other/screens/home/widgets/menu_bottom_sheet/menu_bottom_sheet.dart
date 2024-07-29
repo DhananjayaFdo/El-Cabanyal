@@ -1,10 +1,12 @@
 import 'package:el_cabanyal/src/config/theme/app_theme.dart';
 import 'package:el_cabanyal/src/core/constants/constants.dart';
+import 'package:el_cabanyal/src/core/services/provider/shop_provider.dart';
 import 'package:el_cabanyal/src/core/widgets/cus_navigations.dart';
 import 'package:el_cabanyal/src/core/widgets/cus_widgets.dart';
 import 'package:el_cabanyal/src/core/widgets/customizable_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MenuBottomSheet extends StatefulWidget {
   const MenuBottomSheet({super.key});
@@ -16,8 +18,8 @@ class MenuBottomSheet extends StatefulWidget {
 class _MenuBottomSheetState extends State<MenuBottomSheet> {
   final scrollController = ScrollController();
   List options = [
-    {"title": 'Lunch · 10am - 5pm', "active": false},
-    {"title": 'Breakfast · 5pm - 11pm', "active": true},
+    {"title": ShopRepo.lunchTime, "active": false},
+    {"title": ShopRepo.breakfastTime, "active": true},
   ];
 
   @override
@@ -87,7 +89,7 @@ class _MenuBottomSheetState extends State<MenuBottomSheet> {
                 CustomizableBtn(
                   padding: EdgeInsets.only(top: 10),
                   text: 'Done',
-                  onTap: () {},
+                  onTap: () => popNavigator(context),
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.WHITE),
                   backgroundColor: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(20),
@@ -108,29 +110,34 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.ASH),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        alignment: Alignment.centerLeft,
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                setStringText(data['title']).capitalize(),
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(),
+    return Consumer<ShopProvider>(
+      builder: (context, shop, child) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          height: 50,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppTheme.ASH),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  setStringText(data['title']).capitalize(),
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(),
+                ),
               ),
-            ),
 
-            //? ---------
-            BtnCard(isActive: data['active']),
-          ],
+              //? ---------
+              GestureDetector(
+                onTap: () => shop.setTime(data['title']),
+                child: BtnCard(isActive: shop.dayTime == data['title'] ? true : false),
+              ),
+            ],
+          ),
         ),
       ),
     );

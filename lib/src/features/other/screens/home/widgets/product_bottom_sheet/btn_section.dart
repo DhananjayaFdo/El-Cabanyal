@@ -9,12 +9,14 @@ class BtnSection extends StatefulWidget {
   final TextEditingController productQuantityController;
   final void Function() increaseMain;
   final void Function() decreaseMain;
+  final int Function() calculateTotal;
 
   const BtnSection({
     super.key,
     required this.productQuantityController,
     required this.increaseMain,
     required this.decreaseMain,
+    required this.calculateTotal,
   });
 
   @override
@@ -36,7 +38,9 @@ class _BtnSectionState extends State<BtnSection> {
             increaseMain: widget.increaseMain,
             decreaseMain: widget.decreaseMain,
           ),
-          AddToCartBtn(),
+          AddToCartBtn(
+            calculateTotal: widget.calculateTotal,
+          ),
         ],
       ),
     );
@@ -119,7 +123,9 @@ class _ItemAddRemoveState extends State<ItemAddRemove> {
 }
 
 class AddToCartBtn extends StatelessWidget {
-  const AddToCartBtn({super.key});
+  final int Function() calculateTotal;
+
+  const AddToCartBtn({super.key, required this.calculateTotal});
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +134,7 @@ class AddToCartBtn extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10),
         child: CustomizableBtn(
           height: 50,
-          text: 'Add to Cart  ₹1260',
+          text: 'Add to Cart  ${calculateTotal()}',
           onTap: () {},
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.WHITE),
           borderRadius: BorderRadius.circular(10),

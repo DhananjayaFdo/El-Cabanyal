@@ -4,6 +4,8 @@ class ShopRepo {
   static const String delivery = 'delivery';
   static const String table = 'table';
   static const String pickup = 'pickup';
+  static const String lunchTime = 'lunch · 10am - 5pm';
+  static const String breakfastTime = 'breakfast · 5am 11pm';
 }
 
 class ShopProvider extends ChangeNotifier {
@@ -15,6 +17,16 @@ class ShopProvider extends ChangeNotifier {
 
   void setOrderType(String type) {
     _orderType = type;
+    notifyListeners();
+  }
+
+  //? ------------------------------------------------------------------------------------------------------------------------
+  String _dayTime = ShopRepo.lunchTime;
+
+  String get dayTime => _dayTime;
+
+  setTime(String time) {
+    _dayTime = time;
     notifyListeners();
   }
 
