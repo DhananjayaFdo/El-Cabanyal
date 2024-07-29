@@ -11,8 +11,8 @@ import '../../../../domain/entity/entities.dart';
 
 class ToppingsSection extends StatefulWidget {
   final List<List<ItemEntity>> toppings;
-  final List<TextEditingController> toppingsControllers;
-  final List<TextEditingController> toppingsInitialController;
+  final List<List<TextEditingController>> toppingsControllers;
+  final List<List<TextEditingController>> toppingsInitialController;
 
   const ToppingsSection({
     super.key,
@@ -72,8 +72,8 @@ class _ToppingsSectionState extends State<ToppingsSection> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index2) => QuantityRow(
                     title: list[index2].title!.en ?? '',
-                    quantityController: widget.toppingsControllers[index2],
-                    toppingsInitialController: widget.toppingsInitialController[index2],
+                    quantityController: widget.toppingsControllers[index][index2],
+                    toppingsInitialController: widget.toppingsInitialController[index][index2],
                   ),
                 );
               },
