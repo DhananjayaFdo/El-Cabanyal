@@ -208,9 +208,9 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> with WidgetsBin
                     toppingsControllers: toppingsController,
                     toppingsInitialController: toppingsInitialController,
                   ),
-                  // SubsShower(),
+                  // const SubsShower(),
                   const DivideCon(),
-                  // SizesShower(),
+                  SizesShower(),
 
                   //? ----------------
                   const CommentsSection(),

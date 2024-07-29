@@ -82,4 +82,9 @@ With Provider, you can easily share and access state throughout your app, making
 for managing state in Flutter projects. It simplifies the process of listening to changes in state
 and updating the UI accordingly, promoting a clean and maintainable code structure.
 
+## Special Notes
+
+- In the product bottom sheet there is a section for select food size but I couldn't find any
+  relational data to link that but the ui part available in the code but its not functional
+
 ```
